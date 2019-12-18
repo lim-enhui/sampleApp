@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import {Capacitor, Filesystem} from "@capacitor/core";
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,26 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private fileChooser: FileChooser) {}
+
+  async openFile() {
+    this.fileChooser.open({mime: "application/pdf"}).then(uri => {
+      console.log(uri);
+      this.readFilePath(uri);
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
+  async readFilePath(uri) {
+    try {
+      let data = await Filesystem.readFile({
+        path: uri
+      });
+      console.log(data);
+    } catch(e) {
+      console.log(e);
+    }
+  }
 
 }

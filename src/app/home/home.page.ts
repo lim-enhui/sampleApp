@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import {Capacitor, Filesystem} from "@capacitor/core";
+import {Capacitor, Plugins} from "@capacitor/core";
 
 @Component({
   selector: 'app-home',
@@ -21,6 +21,7 @@ export class HomePage {
   }
 
   async readFilePath(uri) {
+    const {Filesystem} = Plugins;
     try {
       let data = await Filesystem.readFile({
         path: uri
